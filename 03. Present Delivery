@@ -1,0 +1,71 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Present_Delivery
+{
+	class Program
+	{
+		static void Main(string[] args)
+		{
+			List<int> houses = Console.ReadLine().Split("@").Select(int.Parse).ToList();
+
+			int index = 0;
+
+			while (true)
+			{
+				string[] jumps = Console.ReadLine().Split().ToArray();
+
+				if (jumps[0].Equals("Merry"))
+				{
+					break;
+				}
+
+				int jump = int.Parse(jumps[1]);
+
+				if (index + jump >= houses.Count)
+				{
+					index = (index + jump) % houses.Count;
+				}
+				else
+				{
+					index += jump;
+				}
+
+
+				if (houses[index].Equals(0))
+				{
+					Console.WriteLine($"House {index} will have a Merry Christmas.");
+				}
+				houses[index] -= 2;
+
+			}
+
+			Console.WriteLine($"Santa's last position was {index}.");
+
+			int noXmaxHouse = 0;
+			bool trueXmax = true;
+
+			for (int i = 0; i < houses.Count; i++)
+			{
+				if (houses[i] <= 0)
+				{
+					noXmaxHouse++;
+				}
+				else
+				{
+					trueXmax = false;
+				}
+			}
+
+			if (trueXmax)
+			{
+				Console.WriteLine("Mission was successful.");
+			}
+			else
+			{
+				Console.WriteLine($"Santa has failed {houses.Count - noXmaxHouse} houses.");
+			}
+		}
+	}
+}
